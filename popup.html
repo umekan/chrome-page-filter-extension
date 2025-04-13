@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Page Filter Extension</title>
+  <meta charset="UTF-8">
+  <style>
+    body {
+      width: 300px;
+      height: 400px;
+      padding: 10px;
+      font-family: Arial, sans-serif;
+    }
+    h1 {
+      color: #4285f4;
+      text-align: center;
+      font-size: 18px;
+      margin-bottom: 20px;
+    }
+    .control-group {
+      margin-bottom: 15px;
+    }
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+      font-size: 14px;
+    }
+    .slider-container {
+      display: flex;
+      align-items: center;
+    }
+    input[type="range"] {
+      flex: 1;
+      margin-right: 10px;
+    }
+    .value-display {
+      width: 40px;
+      text-align: right;
+      font-size: 12px;
+    }
+    button {
+      margin-top: 15px;
+      padding: 8px 12px;
+      background-color: #4285f4;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      display: block;
+      width: 100%;
+    }
+    button:hover {
+      background-color: #3367d6;
+    }
+    #output {
+      margin-top: 15px;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      min-height: 30px;
+      font-size: 13px;
+    }
+    .preset-filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 15px;
+      justify-content: space-between;
+    }
+    .preset-btn {
+      padding: 8px 10px;
+      font-size: 13px;
+      border-radius: 4px;
+      border: 1px solid #ddd;
+      background: #f5f5f5;
+      cursor: pointer;
+      width: calc(50% - 5px);
+      margin-bottom: 8px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .preset-btn:hover {
+      background: #e0e0e0;
+    }
+    .preset-name {
+      font-weight: bold;
+      font-size: 14px;
+      margin-bottom: 2px;
+    }
+    .preset-name-en {
+      font-size: 11px;
+      color: #666;
+    }
+    .preview-box {
+      height: 30px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      margin-top: 10px;
+      background-image: linear-gradient(45deg, #f5f5f5 25%, transparent 25%),
+                      linear-gradient(-45deg, #f5f5f5 25%, transparent 25%),
+                      linear-gradient(45deg, transparent 75%, #f5f5f5 75%),
+                      linear-gradient(-45deg, transparent 75%, #f5f5f5 75%);
+      background-size: 10px 10px;
+      background-position: 0 0, 0 5px, 5px -5px, -5px 0px;
+    }
+  </style>
+  <script src="popup.js"></script>
+</head>
+<body>
+  <h1>ページフィルター</h1>
+  
+  <div class="control-group">
+    <label for="hue-rotate">色相回転 (Hue Rotate)</label>
+    <div class="slider-container">
+      <input type="range" id="hue-rotate" min="0" max="360" value="0" step="5">
+      <span class="value-display" id="hue-rotate-value">0°</span>
+    </div>
+  </div>
+  
+  <div class="control-group">
+    <label for="saturate">彩度 (Saturation)</label>
+    <div class="slider-container">
+      <input type="range" id="saturate" min="0" max="200" value="100" step="5">
+      <span class="value-display" id="saturate-value">100%</span>
+    </div>
+  </div>
+  
+  <div class="control-group">
+    <label for="brightness">明るさ (Brightness)</label>
+    <div class="slider-container">
+      <input type="range" id="brightness" min="50" max="150" value="100" step="5">
+      <span class="value-display" id="brightness-value">100%</span>
+    </div>
+  </div>
+  
+  <div class="control-group">
+    <label for="contrast">コントラスト (Contrast)</label>
+    <div class="slider-container">
+      <input type="range" id="contrast" min="50" max="150" value="100" step="5">
+      <span class="value-display" id="contrast-value">100%</span>
+    </div>
+  </div>
+  
+  <div class="preview-box" id="preview"></div>
+  
+  <div class="preset-filters">
+    <button class="preset-btn" data-preset="normal">
+      <span class="preset-name">標準</span>
+      <span class="preset-name-en">Normal</span>
+    </button>
+    <button class="preset-btn" data-preset="sepia">
+      <span class="preset-name">セピア</span>
+      <span class="preset-name-en">Sepia</span>
+    </button>
+    <button class="preset-btn" data-preset="cool">
+      <span class="preset-name">クール</span>
+      <span class="preset-name-en">Cool</span>
+    </button>
+    <button class="preset-btn" data-preset="warm">
+      <span class="preset-name">ウォーム</span>
+      <span class="preset-name-en">Warm</span>
+    </button>
+    <button class="preset-btn" data-preset="night">
+      <span class="preset-name">ナイト</span>
+      <span class="preset-name-en">Night</span>
+    </button>
+  </div>
+  
+  <button id="applyFilter">フィルターを適用</button>
+  <button id="resetFilter">リセット</button>
+  
+  <div id="output">スライダーを調整してフィルターを変更できます</div>
+</body>
+</html>
